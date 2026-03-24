@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './features/home/home';
-import { MenuComponent } from './features/menu/menu';
-import { AdminComponent } from './features/admin/admin';
+import { Home } from './features/home/home';
+import { Menu } from './features/menu/menu';
+import { Admin } from './features/admin/admin';
 
 
-const routes: Routes = [
-    { path: '', component: HomeComponent },
-    { path: 'menu', component: MenuComponent },
-    { path: 'admin', component: AdminComponent },
+export const routes: Routes = [
+    { path: '', component: Home },
+    { path: 'menu', component: Menu },
+    { path: 'admin', component: Admin },
 ];
