@@ -74,13 +74,13 @@ The project focuses on:
 ---
 
 ## API
-GET /products
-GET /products/featured
-PATCH /products/:id/availability
+- GET /products
+- GET /products/featured
+- PATCH /products/:id/availability
 
-POST /orders
-GET /orders
-PATCH /orders/:id/status
+- POST /orders
+- GET /orders
+- PATCH /orders/:id/status
 
 
 ---
