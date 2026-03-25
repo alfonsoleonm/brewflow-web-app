@@ -1,5 +1,6 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { Product } from '../models/product.model';
+import { OrderItem } from '../models/order.model';
 
 export type CartItem = Product & {
   quantity: number;
@@ -57,5 +58,14 @@ export class CartService {
 
   clearCart() {
     this.itemsSignal.set([]);
+  }
+
+  toOrderItems(): OrderItem[] {
+    return this.itemsSignal().map((item) => ({
+      productId: item.id,
+      name: item.name,
+      quantity: item.quantity,
+      price: item.price,
+    }));
   }
 }

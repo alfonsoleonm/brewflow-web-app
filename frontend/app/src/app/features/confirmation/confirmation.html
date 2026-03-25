@@ -1,0 +1,39 @@
+<div class="page-container">
+    <section class="bf-card confirmation-card">
+        @if (order) {
+        <div class="confirmation-badge">Order Confirmed</div>
+        <h1 class="bf-section-title">Thanks, {{ order.customerName }}</h1>
+        <p class="bf-muted">
+            Your order has been received and is now in queue.
+        </p>
+
+        <div class="confirmation-grid">
+            <div>
+                <span class="label">Order ID</span>
+                <strong>{{ order.id }}</strong>
+            </div>
+            <div>
+                <span class="label">Status</span>
+                <strong>{{ order.status }}</strong>
+            </div>
+            <div>
+                <span class="label">Created At</span>
+                <strong>{{ order.createdAt | date:'medium' }}</strong>
+            </div>
+            <div>
+                <span class="label">Total</span>
+                <strong>{{ order.total | currency:'MXN':'symbol':'1.0-0' }}</strong>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a mat-stroked-button routerLink="/menu">Back to menu</a>
+            <a mat-flat-button class="admin-btn" routerLink="/admin">Open admin</a>
+        </div>
+        } @else {
+        <h1 class="bf-section-title">No order found</h1>
+        <p class="bf-muted">Go back to the menu and place an order.</p>
+        <a mat-flat-button class="admin-btn" routerLink="/menu">Go to menu</a>
+        }
+    </section>
+</div>

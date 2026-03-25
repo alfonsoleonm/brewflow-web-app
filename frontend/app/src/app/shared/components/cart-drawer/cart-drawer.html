@@ -45,7 +45,7 @@
             <strong>{{ cartService.total() | currency:'MXN':'symbol':'1.0-0' }}</strong>
         </div>
 
-        <button mat-flat-button class="checkout-btn">
+        <button mat-flat-button class="checkout-btn" (click)="goToCheckout()">
             Continue to checkout
         </button>
     </div>

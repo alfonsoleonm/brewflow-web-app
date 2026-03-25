@@ -4,6 +4,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CurrencyPipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart-drawer',
@@ -13,4 +14,9 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class CartDrawer {
   cartService = inject(CartService);
+  private router = inject(Router);
+
+  goToCheckout() {
+    this.router.navigate(['/checkout']);
+  }
 }

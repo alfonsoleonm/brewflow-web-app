@@ -1,0 +1,53 @@
+<div class="page-container checkout-page">
+    <div class="checkout-layout">
+        <section class="bf-card checkout-form-card">
+            <h1 class="bf-section-title">Checkout</h1>
+            <p class="bf-muted">Complete your order and we’ll prepare it right away.</p>
+
+            <form [formGroup]="form" (ngSubmit)="submitOrder()" class="checkout-form">
+                <mat-form-field appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="customerName" />
+                    @if (form.controls.customerName.touched && form.controls.customerName.invalid) {
+                    <mat-error>Please enter your name</mat-error>
+                    }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Note (optional)</mat-label>
+                    <textarea matInput rows="4" formControlName="note"></textarea>
+                </mat-form-field>
+
+                <button mat-flat-button type="submit" class="place-order-btn"
+                    [disabled]="isSubmitting || isCartEmpty()">
+                    Place order
+                </button>
+            </form>
+        </section>
+
+        <aside class="bf-card summary-card">
+            <h2>Order Summary</h2>
+
+            @if (cartItems().length === 0) {
+            <p class="bf-muted">Your cart is empty.</p>
+            } @else {
+            <div class="summary-items">
+                @for (item of cartItems(); track item.id) {
+                <div class="summary-item">
+                    <div>
+                        <strong>{{ item.name }}</strong>
+                        <div class="bf-muted">Qty {{ item.quantity }}</div>
+                    </div>
+                    <span>{{ item.price * item.quantity | currency:'MXN':'symbol':'1.0-0' }}</span>
+                </div>
+                }
+            </div>
+
+            <div class="summary-total">
+                <span>Total</span>
+                <strong>{{ total() | currency:'MXN':'symbol':'1.0-0' }}</strong>
+            </div>
+            }
+        </aside>
+    </div>
+</div>
