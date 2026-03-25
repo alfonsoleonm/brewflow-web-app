@@ -1,0 +1,53 @@
+<div class="cart-drawer">
+    <div class="cart-header">
+        <div>
+            <h2>Your Order</h2>
+            <p class="bf-muted">{{ cartService.itemCount() }} item(s)</p>
+        </div>
+    </div>
+
+    @if (cartService.items().length === 0) {
+    <div class="empty-state">
+        <p>Your cart is empty.</p>
+        <span class="bf-muted">Add something from the menu.</span>
+    </div>
+    } @else {
+    <div class="cart-items">
+        @for (item of cartService.items(); track item.id) {
+        <div class="cart-item">
+            <div class="cart-item-info">
+                <h3>{{ item.name }}</h3>
+                <p class="bf-muted">{{ item.price | currency:'MXN':'symbol':'1.0-0' }}</p>
+            </div>
+
+            <div class="cart-item-actions">
+                <button mat-icon-button (click)="cartService.decreaseQuantity(item.id)">
+                    <mat-icon>remove</mat-icon>
+                </button>
+
+                <span>{{ item.quantity }}</span>
+
+                <button mat-icon-button (click)="cartService.addToCart(item)">
+                    <mat-icon>add</mat-icon>
+                </button>
+
+                <button mat-icon-button (click)="cartService.removeFromCart(item.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+        </div>
+        }
+    </div>
+
+    <div class="cart-footer">
+        <div class="total-row">
+            <span>Total</span>
+            <strong>{{ cartService.total() | currency:'MXN':'symbol':'1.0-0' }}</strong>
+        </div>
+
+        <button mat-flat-button class="checkout-btn">
+            Continue to checkout
+        </button>
+    </div>
+    }
+</div>

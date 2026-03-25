@@ -1,28 +1,48 @@
-<div class="page-container">
-    <h1 class="bf-section-title">Menu</h1>
-    <p class="bf-muted">Curated coffee, bakery, and food.</p>
+<mat-drawer-container class="drawer-container">
+    <mat-drawer #cartDrawer mode="over" position="end" class="cart-panel">
+        <app-cart-drawer />
+    </mat-drawer>
 
-    <div class="products-grid">
-        @for (product of products; track product.id) {
-        <article class="bf-card product-card">
-            <img [src]="product.imageUrl" [alt]="product.name" class="product-image" />
-
-            <div class="product-content">
-                <div class="product-top">
-                    <h3>{{ product.name }}</h3>
-                    <span class="price">${{ product.price }}</span>
-                </div>
-
-                <p class="bf-muted">{{ product.description }}</p>
-
-                <div class="product-footer">
-                    <span class="category">{{ product.category }}</span>
-                    @if (!product.available) {
-                    <span class="unavailable">Unavailable</span>
-                    }
-                </div>
+    <div class="page-container">
+        <div class="menu-header">
+            <div>
+                <h1 class="bf-section-title">Menu</h1>
+                <p class="bf-muted">Curated coffee, bakery, and food.</p>
             </div>
-        </article>
-        }
+
+            <button mat-stroked-button class="cart-trigger" (click)="cartDrawer.toggle()">
+                <mat-icon>shopping_bag</mat-icon>
+                Cart ({{ cartCount() }})
+            </button>
+        </div>
+
+        <div class="products-grid">
+            @for (product of products; track product.id) {
+            <article class="bf-card product-card">
+                <img [src]="product.imageUrl" [alt]="product.name" class="product-image" />
+
+                <div class="product-content">
+                    <div class="product-top">
+                        <h3>{{ product.name }}</h3>
+                        <span class="price">${{ product.price }}</span>
+                    </div>
+
+                    <p class="bf-muted">{{ product.description }}</p>
+
+                    <div class="product-footer">
+                        <span class="category">{{ product.category }}</span>
+
+                        @if (!product.available) {
+                        <span class="unavailable">Unavailable</span>
+                        } @else {
+                        <button mat-flat-button (click)="addToCart(product)">
+                            Add
+                        </button>
+                        }
+                    </div>
+                </div>
+            </article>
+            }
+        </div>
     </div>
-</div>
+</mat-drawer-container>
