@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import type { CreateOrderRequest, Order, OrderStatus } from '../models/order.js';
-import { OrdersRepository } from '../repositories/orders.repositories.js';
+import { OrdersRepository } from '../repositories/orders.repository.js';
 
 const router = Router();
 const ordersRepository = new OrdersRepository();
