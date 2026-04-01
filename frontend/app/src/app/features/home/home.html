@@ -1,1 +1,86 @@
-<p>home works!</p>
+<div class="home-page">
+    <section class="hero">
+        <div class="page-container hero-content">
+            <div class="hero-copy">
+                <span class="hero-kicker">Premium specialty coffee</span>
+                <h1 class="hero-title">Crafted for the city rhythm.</h1>
+                <p class="hero-subtitle">
+                    Curated coffee, bakery, and food for modern mornings, focused afternoons,
+                    and effortless pickup.
+                </p>
+
+                <div class="hero-actions">
+                    <a mat-flat-button class="primary-cta" routerLink="/menu">Order now</a>
+                    <a mat-stroked-button class="secondary-cta" routerLink="/admin">View dashboard</a>
+                </div>
+            </div>
+
+            <div class="hero-card bf-card">
+                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085"
+                    alt="BrewFlow signature coffee" />
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-section">
+        <div class="page-container">
+            <div class="section-header">
+                <div>
+                    <span class="section-kicker">Selected for today</span>
+                    <h2 class="bf-section-title">Featured Menu</h2>
+                </div>
+
+                <a mat-stroked-button routerLink="/menu">See full menu</a>
+            </div>
+
+            <div class="featured-grid">
+                @for (product of featuredProducts(); track product.id) {
+                <article class="bf-card featured-card">
+                    <img [src]="product.imageUrl" [alt]="product.name" class="featured-image" />
+
+                    <div class="featured-content">
+                        <div class="featured-top">
+                            <div>
+                                <span class="featured-category">{{ product.category }}</span>
+                                <h3>{{ product.name }}</h3>
+                            </div>
+
+                            <span class="featured-price">
+                                {{ product.price | currency:'MXN':'symbol':'1.0-0' }}
+                            </span>
+                        </div>
+
+                        <p class="bf-muted">{{ product.description }}</p>
+                    </div>
+                </article>
+                }
+            </div>
+        </div>
+    </section>
+
+    <section class="value-section">
+        <div class="page-container value-grid">
+            <article class="bf-card value-card">
+                <h3>Curated menu</h3>
+                <p class="bf-muted">
+                    A refined selection of coffee, bakery, and food designed to feel premium,
+                    not crowded.
+                </p>
+            </article>
+
+            <article class="bf-card value-card">
+                <h3>Fast pickup flow</h3>
+                <p class="bf-muted">
+                    Browse, order, and get a clear confirmation with a human-friendly order ID.
+                </p>
+            </article>
+
+            <article class="bf-card value-card">
+                <h3>Operational clarity</h3>
+                <p class="bf-muted">
+                    Staff can manage order progress through a lightweight admin dashboard.
+                </p>
+            </article>
+        </div>
+    </section>
+</div>
