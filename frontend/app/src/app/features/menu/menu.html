@@ -12,18 +12,28 @@
 
             <button mat-stroked-button class="cart-trigger" (click)="cartDrawer.toggle()">
                 <mat-icon>shopping_bag</mat-icon>
-                Cart ({{ cartCount() }})
+                Cart ({{ cartCount }})
             </button>
         </div>
 
+        <div class="category-filters">
+            @for (category of categories; track category) {
+            <button mat-stroked-button class="category-btn" [class.active]="selectedCategory() === category"
+                (click)="selectCategory(category)">
+                {{ category }}
+            </button>
+            }
+        </div>
+
         <div class="products-grid">
-            @for (product of products; track product.id) {
+            @for (product of filteredProducts(); track product.id) {
             <article class="bf-card product-card">
-                <img [src]="product.imageUrl" [alt]="product.name" class="product-image" />
+                <img [src]="product.imageUrl" [alt]="product.name" class="product-image"
+                    (click)="openProductModal(product)" />
 
                 <div class="product-content">
                     <div class="product-top">
-                        <h3>{{ product.name }}</h3>
+                        <h3 (click)="openProductModal(product)">{{ product.name }}</h3>
                         <span class="price">${{ product.price }}</span>
                     </div>
 
@@ -46,3 +56,5 @@
         </div>
     </div>
 </mat-drawer-container>
+
+<app-product-modal [product]="selectedProduct()" (closed)="closeProductModal()" />

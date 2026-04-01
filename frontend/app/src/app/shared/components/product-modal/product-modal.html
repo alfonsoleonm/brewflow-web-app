@@ -1,0 +1,36 @@
+@if (product) {
+<div class="modal-backdrop" (click)="close()">
+    <div class="modal-card bf-card" (click)="$event.stopPropagation()">
+        <button class="close-btn" (click)="close()">✕</button>
+
+        <img [src]="product.imageUrl" [alt]="product.name" class="modal-image" />
+
+        <div class="modal-content">
+            <div class="modal-top">
+                <div>
+                    <span class="modal-category">{{ product.category }}</span>
+                    <h2>{{ product.name }}</h2>
+                </div>
+
+                <span class="modal-price">
+                    {{ product.price | currency:'MXN':'symbol':'1.0-0' }}
+                </span>
+            </div>
+
+            <p class="bf-muted modal-description">
+                {{ product.description }}
+            </p>
+
+            <div class="modal-actions">
+                @if (!product.available) {
+                <span class="unavailable">Currently unavailable</span>
+                } @else {
+                <button mat-flat-button class="add-btn" (click)="addToCart(product)">
+                    Add to cart
+                </button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+}
