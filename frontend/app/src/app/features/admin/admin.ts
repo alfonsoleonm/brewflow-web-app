@@ -1,9 +1,99 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { CurrencyPipe, DatePipe } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { OrdersService } from '../../core/services/orders.service';
+import { Order, OrderStatus } from '../../core/models/order.model';
+
+type StatusFilter = 'ALL' | OrderStatus;
 
 @Component({
   selector: 'app-admin',
-  imports: [],
+  imports: [CurrencyPipe, DatePipe, MatButtonModule],
   templateUrl: './admin.html',
   styleUrl: './admin.scss',
 })
-export class Admin {}
+export class Admin {
+  private ordersService = inject(OrdersService);
+
+  orders = signal<Order[]>([]);
+  selectedStatus = signal<StatusFilter>('ALL');
+  isLoading = signal(true);
+
+  filteredOrders = computed(() => {
+    const selected = this.selectedStatus();
+    const allOrders = this.orders();
+
+    if (selected === 'ALL') {
+      return allOrders;
+    }
+
+    return allOrders.filter((order) => order.status === selected);
+  });
+
+  readonly filters: StatusFilter[] = [
+    'ALL',
+    'RECEIVED',
+    'PREPARING',
+    'READY',
+    'COMPLETED',
+  ];
+
+  ngOnInit() {
+    this.loadOrders();
+  }
+
+  loadOrders() {
+    this.isLoading.set(true);
+
+    this.ordersService.getOrders().subscribe({
+      next: (orders) => {
+        this.orders.set(orders);
+        this.isLoading.set(false);
+      },
+      error: (error) => {
+        console.error('Failed to load orders', error);
+        this.isLoading.set(false);
+      },
+    });
+  }
+
+  selectFilter(filter: StatusFilter) {
+    this.selectedStatus.set(filter);
+  }
+
+  updateStatus(order: Order, status: OrderStatus) {
+    if (order.status === status) {
+      return;
+    }
+
+    this.ordersService.updateOrderStatus(order.id, status).subscribe({
+      next: (updatedOrder) => {
+        this.orders.update((orders) =>
+          orders.map((item) => (item.id === updatedOrder.id ? updatedOrder : item))
+        );
+      },
+      error: (error) => {
+        console.error('Failed to update order status', error);
+      },
+    });
+  }
+
+  getStatusClass(status: OrderStatus) {
+    switch (status) {
+      case 'RECEIVED':
+        return 'status-received';
+      case 'PREPARING':
+        return 'status-preparing';
+      case 'READY':
+        return 'status-ready';
+      case 'COMPLETED':
+        return 'status-completed';
+      default:
+        return '';
+    }
+  }
+
+  getItemsSummary(order: Order) {
+    return order.items.map((item) => `${item.quantity}× ${item.name}`).join(', ');
+  }
+}

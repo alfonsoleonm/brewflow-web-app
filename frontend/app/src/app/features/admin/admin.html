@@ -1,1 +1,81 @@
-<p>admin works!</p>
+<div class="page-container admin-page">
+    <div class="admin-header">
+        <div>
+            <h1 class="bf-section-title">Order Queue</h1>
+            <p class="bf-muted">Monitor and update incoming orders.</p>
+        </div>
+
+        <button mat-stroked-button (click)="loadOrders()">Refresh</button>
+    </div>
+
+    <div class="filters">
+        @for (filter of filters; track filter) {
+        <button mat-stroked-button class="filter-btn" [class.active]="selectedStatus() === filter"
+            (click)="selectFilter(filter)">
+            {{ filter }}
+        </button>
+        }
+    </div>
+
+    @if (isLoading()) {
+    <div class="empty-state">
+        <p>Loading orders...</p>
+    </div>
+    } @else if (filteredOrders().length === 0) {
+    <div class="empty-state bf-card">
+        <p>No orders found.</p>
+        <span class="bf-muted">Try another filter or create a new order.</span>
+    </div>
+    } @else {
+    <div class="orders-grid">
+        @for (order of filteredOrders(); track order.id) {
+        <article class="bf-card order-card">
+            <div class="order-card-header">
+                <div>
+                    <span class="order-id">{{ order.id }}</span>
+                    <h3>{{ order.customerName }}</h3>
+                </div>
+
+                <span class="status-chip" [class]="getStatusClass(order.status)">
+                    {{ order.status }}
+                </span>
+            </div>
+
+            <div class="order-meta">
+                <span>{{ order.createdAt | date:'medium' }}</span>
+                <span>{{ order.total | currency:'MXN':'symbol':'1.0-0' }}</span>
+            </div>
+
+            <div class="order-body">
+                <p><strong>Items:</strong> {{ getItemsSummary(order) }}</p>
+
+                @if (order.note) {
+                <p><strong>Note:</strong> {{ order.note }}</p>
+                }
+            </div>
+
+            <div class="status-actions">
+                <button mat-stroked-button [disabled]="order.status === 'RECEIVED'"
+                    (click)="updateStatus(order, 'RECEIVED')">
+                    Received
+                </button>
+
+                <button mat-stroked-button [disabled]="order.status === 'PREPARING'"
+                    (click)="updateStatus(order, 'PREPARING')">
+                    Preparing
+                </button>
+
+                <button mat-stroked-button [disabled]="order.status === 'READY'" (click)="updateStatus(order, 'READY')">
+                    Ready
+                </button>
+
+                <button mat-stroked-button [disabled]="order.status === 'COMPLETED'"
+                    (click)="updateStatus(order, 'COMPLETED')">
+                    Completed
+                </button>
+            </div>
+        </article>
+        }
+    </div>
+    }
+</div>
