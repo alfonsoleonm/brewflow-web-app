@@ -1,0 +1,252 @@
+# BrewFlow — Design System
+
+Premium coffee shop experience inspired by modern urban spaces.
+
+The design focuses on:
+- minimalism
+- elegance
+- calm visual hierarchy
+- high-end café aesthetic
+
+---
+
+## 1. Design Principles
+
+### 1.1 Minimal but expressive
+Avoid clutter. Every element should have a purpose.
+
+### 1.2 Premium feel
+Use whitespace, typography, and muted tones instead of heavy UI.
+
+### 1.3 Calm interaction
+No aggressive colors, no sharp contrasts, no noise.
+
+### 1.4 Fast comprehension
+Users should understand:
+- what to order
+- how to order
+- what’s happening with their order
+
+in seconds.
+
+---
+
+## 2. Color Palette
+
+### Base Colors
+
+| Token            | Color     | Usage                         |
+|------------------|----------|-------------------------------|
+| `--bg`           | #F7F3EE  | App background                |
+| `--surface`      | #FFFDFC  | Cards, panels                |
+| `--text-primary` | #1F1A17  | Main text                    |
+| `--text-secondary` | #6B625B | Secondary text               |
+| `--divider`      | #E8E3DC  | Borders, separators          |
+
+---
+
+### Brand / Accent
+
+| Token        | Color     | Usage                          |
+|--------------|----------|--------------------------------|
+| `--primary`  | #6F4E37  | Main actions, highlights       |
+
+---
+
+### Semantic Colors
+
+| Token            | Color     | Usage                  |
+|------------------|----------|------------------------|
+| `--success`      | #4F7A5A  | Ready / success states |
+| `--warning`      | #B08968  | Preparing state        |
+| `--neutral`      | #7A6F66  | Received state         |
+| `--completed`    | #9C8F85  | Completed state        |
+
+---
+
+## 3. Typography
+
+### Font Families
+
+- **Primary (UI):** Inter
+- **Display (Headings):** Playfair Display
+
+---
+
+### Scale
+
+| Element         | Style                          |
+|-----------------|-------------------------------|
+| Hero title      | 3rem – 5rem (Playfair)        |
+| Section title   | 1.8rem – 2.4rem               |
+| Card title      | 1.1rem – 1.3rem               |
+| Body text       | 1rem                          |
+| Secondary text  | 0.85rem – 0.95rem             |
+
+---
+
+### Rules
+
+- Use **Playfair Display only for impact**
+- Keep body text clean and readable
+- Avoid heavy bold usage
+
+---
+
+## 4. Spacing System
+
+Use consistent spacing:
+
+| Size | Value |
+|------|------|
+| xs   | 4px  |
+| sm   | 8px  |
+| md   | 12px |
+| lg   | 16px |
+| xl   | 24px |
+| xxl  | 32px |
+
+---
+
+### Layout rules
+
+- Sections: `24px – 56px` vertical spacing
+- Cards padding: `16px – 24px`
+- Grid gaps: `20px – 24px`
+
+---
+
+## 5. Components
+
+### 5.1 Cards (`.bf-card`)
+
+Used across:
+- products
+- admin orders
+- featured sections
+
+Style:
+- soft background (`--surface`)
+- subtle shadow
+- rounded corners
+- generous padding
+
+---
+
+### 5.2 Buttons
+
+#### Primary
+- filled
+- rounded (pill shape)
+- background: `--primary`
+- text: white
+
+#### Secondary
+- outlined
+- neutral tone
+- used for secondary actions
+
+---
+
+### 5.3 Chips / Filters
+
+Used in:
+- categories
+- admin filters
+
+States:
+- default → neutral
+- active → primary background + white text
+
+---
+
+### 5.4 Status Chips
+
+| Status     | Style |
+|------------|------|
+| RECEIVED   | neutral |
+| PREPARING  | warning |
+| READY      | success |
+| COMPLETED  | muted |
+
+---
+
+### 5.5 Modal
+
+Used for:
+- product details
+
+Rules:
+- centered
+- image-first layout
+- large typography
+- minimal clutter
+
+---
+
+### 5.6 Drawer (Cart)
+
+- slides from right
+- persistent state
+- clear CTA (checkout)
+
+---
+
+## 6. Layout Patterns
+
+### 6.1 Page container
+
+```css
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+### 6.2 Grid system
+
+Products:
+
+responsive grid
+min width: 260px
+
+Admin:
+
+cards grid
+min width: 320px
+
+
+## 7. Interaction Patterns
+
+Menu
+- quick scan
+- visual-first (images)
+- fast add-to-cart
+
+Cart
+- always accessible
+- minimal friction
+
+Checkout
+- minimal fields:
+- name
+- optional note
+
+Admin
+- operational clarity
+- quick status updates
+
+
+## 8. Tone & Branding
+
+BrewFlow is:
+- modern
+- calm
+- premium
+- efficient
+
+## 10. Future Enhancements
+- dark mode (espresso theme)
+- subtle motion system
+- design tokens extracted to theme file
+- component library standardization

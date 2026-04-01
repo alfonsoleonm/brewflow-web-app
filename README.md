@@ -28,8 +28,9 @@ The project focuses on:
 ### Database
 - DynamoDB
 
-### Cloud (target architecture)
-- S3 + CloudFront (frontend hosting)
+### Cloud (current + target architecture)
+- Current: local Angular app + local Express API + DynamoDB in AWS
+- Target: S3 + CloudFront (frontend hosting)
 - API Gateway + Lambda (API layer)
 - DynamoDB (data storage)
 - CloudWatch (logging & monitoring)
@@ -39,6 +40,12 @@ The project focuses on:
 ## Architecture
 
 ![Architecture](./docs/architecture.png)
+
+---
+
+## Design
+See the full design system:
+[Design System](./docs/design-system.md)
 
 ---
 
@@ -138,9 +145,15 @@ cd backend
 npm install
 npm run dev
 
-cd frontend
+cd frontend/app
 npm install
 ng serve
+```
+
+### Seed products
+```sh
+cd backend
+npm run seed:products
 ```
 
 ### Future Improvements
