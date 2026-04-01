@@ -68,6 +68,12 @@ The project focuses on:
 ### Menu
 ![Menu](./docs/menu.png)
 
+### Product Modal
+![Product](./docs/product.png)
+
+### Confirmation
+![Confirmation](./docs/confirmation.png)
+
 ### Admin Dashboard
 ![Admin](./docs/admin.png)
 
