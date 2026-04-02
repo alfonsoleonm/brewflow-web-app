@@ -12,12 +12,18 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class ProductModal {
   private cartService = inject(CartService);
+  added = false;
 
   @Input() product: Product | null = null;
   @Output() closed = new EventEmitter<void>();
 
   addToCart(product: Product) {
     this.cartService.addToCart(product);
+    this.added = true;
+
+    setTimeout(() => {
+      this.added = false;
+    }, 1200);
   }
 
   close() {

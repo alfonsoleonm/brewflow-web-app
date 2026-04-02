@@ -33,6 +33,7 @@ export class Menu implements OnInit {
   selectedProduct = signal<Product | null>(null);
 
   readonly categories: CategoryFilter[] = ['All', 'Coffee', 'Bakery', 'Food'];
+  addedProductId = signal<string | null>(null);
 
   filteredProducts = computed(() => {
     const category = this.selectedCategory();
@@ -59,6 +60,13 @@ export class Menu implements OnInit {
   addToCart(product: Product) {
     this.cartService.addToCart(product);
     this.cartDrawer.open();
+    this.addedProductId.set(product.id);
+
+    setTimeout(() => {
+      if (this.addedProductId() === product.id) {
+        this.addedProductId.set(null);
+      }
+    }, 1200);
   }
 
   selectCategory(category: CategoryFilter) {

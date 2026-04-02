@@ -46,7 +46,7 @@
                         <span class="unavailable">Unavailable</span>
                         } @else {
                         <button mat-flat-button (click)="addToCart(product)">
-                            Add
+                            {{ addedProductId() === product.id ? 'Added' : 'Add' }}
                         </button>
                         }
                     </div>
