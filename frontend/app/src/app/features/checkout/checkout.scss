@@ -51,6 +51,24 @@
     border-top: 1px solid var(--divider);
 }
 
+.bf-form-field {
+    width: 100%;
+}
+
+:host ::ng-deep .bf-form-field .mat-mdc-text-field-wrapper {
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 16px;
+}
+
+:host ::ng-deep .bf-form-field .mdc-text-field__input {
+    padding-left: 4px !important;
+}
+
+:host ::ng-deep .bf-form-field textarea.mdc-text-field__input {
+    padding-top: 8px !important;
+}
+
 @media (max-width: 900px) {
     .checkout-layout {
         grid-template-columns: 1fr;

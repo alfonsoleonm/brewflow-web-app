@@ -1,14 +1,15 @@
 .cart-drawer {
     height: 100%;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
     background: var(--surface);
     padding: 24px;
     box-sizing: border-box;
+    gap: 16px;
 }
 
 .cart-header {
-    margin-bottom: 20px;
+    margin-bottom: 0;
 
     h2 {
         margin: 0 0 4px;
@@ -17,21 +18,24 @@
 }
 
 .empty-state {
-    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 200px;
     text-align: center;
 }
 
 .cart-items {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    flex: 1;
-    overflow: auto;
+    gap: 12px;
+    overflow-y: auto;
     min-height: 0;
+    padding-right: 4px;
 }
 
 .cart-item {
-    padding: 16px;
+    padding: 14px 16px;
     border: 1px solid var(--divider);
     border-radius: 16px;
     background: #fff;
@@ -58,9 +62,6 @@
 .cart-footer {
     border-top: 1px solid var(--divider);
     padding-top: 16px;
-    margin-top: 16px;
-    position: sticky;
-    bottom: 0;
     background: var(--surface);
 }
 

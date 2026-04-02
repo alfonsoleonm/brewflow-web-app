@@ -5,7 +5,7 @@
             <p class="bf-muted">Complete your order and we’ll prepare it right away.</p>
 
             <form [formGroup]="form" (ngSubmit)="submitOrder()" class="checkout-form">
-                <mat-form-field appearance="outline">
+                <mat-form-field appearance="outline" class="bf-form-field">
                     <mat-label>Name</mat-label>
                     <input matInput formControlName="customerName" />
                     @if (form.controls.customerName.touched && form.controls.customerName.invalid) {
@@ -13,7 +13,7 @@
                     }
                 </mat-form-field>
 
-                <mat-form-field appearance="outline">
+                <mat-form-field appearance="outline" class="bf-form-field">
                     <mat-label>Note (optional)</mat-label>
                     <textarea matInput rows="4" formControlName="note"></textarea>
                 </mat-form-field>
