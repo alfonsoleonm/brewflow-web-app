@@ -16,4 +16,10 @@ export class ProductsService {
     getFeaturedProducts() {
         return this.http.get<Product[]>(`${this.apiUrl}/products/featured`);
     }
+
+    updateAvailability(id: string, available: boolean) {
+        return this.http.patch<Product>(`${this.apiUrl}/products/${id}/availability`, {
+            available,
+        });
+    }
 }

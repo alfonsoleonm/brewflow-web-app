@@ -1,9 +1,27 @@
+.admin-page {
+    padding-bottom: 48px;
+}
+
 .admin-header {
     display: flex;
     justify-content: space-between;
     align-items: end;
     gap: 16px;
-    margin-bottom: 24px;
+    margin-bottom: 32px;
+}
+
+.admin-section+.admin-section {
+    margin-top: 40px;
+}
+
+.section-top {
+    margin-bottom: 20px;
+}
+
+.section-title {
+    margin: 0 0 6px;
+    font-size: 1.5rem;
+    font-family: 'Playfair Display', serif;
 }
 
 .filters {
@@ -105,6 +123,71 @@
     margin-top: 20px;
 }
 
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.product-admin-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 20px;
+}
+
+.product-admin-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 16px;
+
+    h3 {
+        margin: 6px 0 0;
+        font-size: 1.1rem;
+    }
+}
+
+.product-category {
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.product-admin-info {
+    p {
+        margin: 14px 0 0;
+        line-height: 1.6;
+    }
+}
+
+.product-admin-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 16px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.featured-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: #f4ede6;
+    color: var(--primary);
+    font-size: 0.75rem;
+}
+
+.product-admin-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .empty-state {
     padding: 32px;
     text-align: center;
@@ -114,5 +197,21 @@
     .admin-header {
         flex-direction: column;
         align-items: stretch;
+    }
+
+    .product-admin-top,
+    .order-card-header,
+    .order-meta,
+    .product-admin-meta {
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .product-admin-actions {
+        justify-content: stretch;
+
+        button {
+            width: 100%;
+        }
     }
 }

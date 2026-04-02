@@ -8,13 +8,15 @@
         </p>
 
         <div class="confirmation-grid">
-            <div>
+            <div class="order-id-block">
                 <span class="label">Order ID</span>
-                <strong>{{ order.id }}</strong>
+                <h2 class="order-id">{{ order.id }}</h2>
             </div>
-            <div>
-                <span class="label">Status</span>
-                <strong>{{ order.status }}</strong>
+
+            <div class="status-block">
+                <span class="status-chip status-received">
+                    {{ order.status }}
+                </span>
             </div>
             <div>
                 <span class="label">Created At</span>

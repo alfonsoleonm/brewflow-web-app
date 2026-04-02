@@ -57,3 +57,11 @@ h3,
 .bf-muted {
   color: var(--text-secondary);
 }
+
+button {
+  transition: all 0.15s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}

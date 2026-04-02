@@ -1,81 +1,141 @@
 <div class="page-container admin-page">
     <div class="admin-header">
         <div>
-            <h1 class="bf-section-title">Order Queue</h1>
-            <p class="bf-muted">Monitor and update incoming orders.</p>
+            <h1 class="bf-section-title">Operations Dashboard</h1>
+            <p class="bf-muted">Monitor orders and manage product availability.</p>
         </div>
 
-        <button mat-stroked-button (click)="loadOrders()">Refresh</button>
+        <button mat-stroked-button (click)="loadOrders(); loadProducts()">Refresh</button>
     </div>
 
-    <div class="filters">
-        @for (filter of filters; track filter) {
-        <button mat-stroked-button class="filter-btn" [class.active]="selectedStatus() === filter"
-            (click)="selectFilter(filter)">
-            {{ filter }}
-        </button>
-        }
-    </div>
+    <section class="admin-section">
+        <div class="section-top">
+            <div>
+                <h2 class="section-title">Order Queue</h2>
+                <p class="bf-muted">Track incoming orders and update their progress.</p>
+            </div>
+        </div>
 
-    @if (isLoading()) {
-    <div class="empty-state">
-        <p>Loading orders...</p>
-    </div>
-    } @else if (filteredOrders().length === 0) {
-    <div class="empty-state bf-card">
-        <p>No orders found.</p>
-        <span class="bf-muted">Try another filter or create a new order.</span>
-    </div>
-    } @else {
-    <div class="orders-grid">
-        @for (order of filteredOrders(); track order.id) {
-        <article class="bf-card order-card">
-            <div class="order-card-header">
-                <div>
-                    <span class="order-id">{{ order.id }}</span>
-                    <h3>{{ order.customerName }}</h3>
+        <div class="filters">
+            @for (filter of filters; track filter) {
+            <button mat-stroked-button class="filter-btn" [class.active]="selectedStatus() === filter"
+                (click)="selectFilter(filter)">
+                {{ filter }}
+            </button>
+            }
+        </div>
+
+        @if (isLoading()) {
+        <div class="empty-state">
+            <p>Loading orders...</p>
+        </div>
+        } @else if (filteredOrders().length === 0) {
+        <div class="empty-state bf-card">
+            <p>No orders found.</p>
+            <span class="bf-muted">Try another filter or create a new order.</span>
+        </div>
+        } @else {
+        <div class="orders-grid">
+            @for (order of filteredOrders(); track order.id) {
+            <article class="bf-card order-card">
+                <div class="order-card-header">
+                    <div>
+                        <span class="order-id">{{ order.id }}</span>
+                        <h3>{{ order.customerName }}</h3>
+                    </div>
+
+                    <span class="status-chip" [class]="getStatusClass(order.status)">
+                        {{ order.status }}
+                    </span>
                 </div>
 
-                <span class="status-chip" [class]="getStatusClass(order.status)">
-                    {{ order.status }}
-                </span>
-            </div>
+                <div class="order-meta">
+                    <span>{{ order.createdAt | date:'medium' }}</span>
+                    <span>{{ order.total | currency:'MXN':'symbol':'1.0-0' }}</span>
+                </div>
 
-            <div class="order-meta">
-                <span>{{ order.createdAt | date:'medium' }}</span>
-                <span>{{ order.total | currency:'MXN':'symbol':'1.0-0' }}</span>
-            </div>
+                <div class="order-body">
+                    <p><strong>Items:</strong> {{ getItemsSummary(order) }}</p>
 
-            <div class="order-body">
-                <p><strong>Items:</strong> {{ getItemsSummary(order) }}</p>
+                    @if (order.note) {
+                    <p><strong>Note:</strong> {{ order.note }}</p>
+                    }
+                </div>
 
-                @if (order.note) {
-                <p><strong>Note:</strong> {{ order.note }}</p>
-                }
-            </div>
+                <div class="status-actions">
+                    <button mat-stroked-button [disabled]="order.status === 'RECEIVED'"
+                        (click)="updateStatus(order, 'RECEIVED')">
+                        Received
+                    </button>
 
-            <div class="status-actions">
-                <button mat-stroked-button [disabled]="order.status === 'RECEIVED'"
-                    (click)="updateStatus(order, 'RECEIVED')">
-                    Received
-                </button>
+                    <button mat-stroked-button [disabled]="order.status === 'PREPARING'"
+                        (click)="updateStatus(order, 'PREPARING')">
+                        Preparing
+                    </button>
 
-                <button mat-stroked-button [disabled]="order.status === 'PREPARING'"
-                    (click)="updateStatus(order, 'PREPARING')">
-                    Preparing
-                </button>
+                    <button mat-stroked-button [disabled]="order.status === 'READY'"
+                        (click)="updateStatus(order, 'READY')">
+                        Ready
+                    </button>
 
-                <button mat-stroked-button [disabled]="order.status === 'READY'" (click)="updateStatus(order, 'READY')">
-                    Ready
-                </button>
-
-                <button mat-stroked-button [disabled]="order.status === 'COMPLETED'"
-                    (click)="updateStatus(order, 'COMPLETED')">
-                    Completed
-                </button>
-            </div>
-        </article>
+                    <button mat-stroked-button [disabled]="order.status === 'COMPLETED'"
+                        (click)="updateStatus(order, 'COMPLETED')">
+                        Completed
+                    </button>
+                </div>
+            </article>
+            }
+        </div>
         }
-    </div>
-    }
+    </section>
+
+    <section class="admin-section products-section">
+        <div class="section-top">
+            <div>
+                <h2 class="section-title">Products</h2>
+                <p class="bf-muted">Enable or disable menu items shown to customers.</p>
+            </div>
+        </div>
+
+        @if (products().length === 0) {
+        <div class="empty-state bf-card">
+            <p>No products found.</p>
+        </div>
+        } @else {
+        <div class="products-grid">
+            @for (product of products(); track product.id) {
+            <article class="bf-card product-admin-card">
+                <div class="product-admin-info">
+                    <div class="product-admin-top">
+                        <div>
+                            <span class="product-category">{{ product.category }}</span>
+                            <h3>{{ product.name }}</h3>
+                        </div>
+
+                        <span class="status-chip" [class.status-ready]="product.available"
+                            [class.status-completed]="!product.available">
+                            {{ product.available ? 'Available' : 'Unavailable' }}
+                        </span>
+                    </div>
+
+                    <p class="bf-muted">{{ product.description }}</p>
+
+                    <div class="product-admin-meta">
+                        <span>{{ product.price | currency:'MXN':'symbol':'1.0-0' }}</span>
+                        @if (product.featured) {
+                        <span class="featured-badge">Featured</span>
+                        }
+                    </div>
+                </div>
+
+                <div class="product-admin-actions">
+                    <button mat-stroked-button (click)="toggleAvailability(product.id, product.available)">
+                        {{ product.available ? 'Disable' : 'Enable' }}
+                    </button>
+                </div>
+            </article>
+            }
+        </div>
+        }
+    </section>
 </div>

@@ -3,6 +3,8 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { OrdersService } from '../../core/services/orders.service';
 import { Order, OrderStatus } from '../../core/models/order.model';
+import { Product } from '../../core/models/product.model';
+import { ProductsService } from '../../core/services/products.service';
 
 type StatusFilter = 'ALL' | OrderStatus;
 
@@ -14,6 +16,9 @@ type StatusFilter = 'ALL' | OrderStatus;
 })
 export class Admin {
   private ordersService = inject(OrdersService);
+  private productsService = inject(ProductsService);
+
+  products = signal<Product[]>([]);
 
   orders = signal<Order[]>([]);
   selectedStatus = signal<StatusFilter>('ALL');
@@ -40,6 +45,7 @@ export class Admin {
 
   ngOnInit() {
     this.loadOrders();
+    this.loadProducts();
   }
 
   loadOrders() {
@@ -54,6 +60,13 @@ export class Admin {
         console.error('Failed to load orders', error);
         this.isLoading.set(false);
       },
+    });
+  }
+
+  loadProducts() {
+    this.productsService.getProducts().subscribe({
+      next: (products) => this.products.set(products),
+      error: (error) => console.error('Failed to load products', error),
     });
   }
 
@@ -95,5 +108,18 @@ export class Admin {
 
   getItemsSummary(order: Order) {
     return order.items.map((item) => `${item.quantity}× ${item.name}`).join(', ');
+  }
+
+  toggleAvailability(productId: string, current: boolean) {
+    this.productsService.updateAvailability(productId, !current).subscribe({
+      next: (updatedProduct) => {
+        this.products.update((products) =>
+          products.map((product) =>
+            product.id === updatedProduct.id ? updatedProduct : product
+          )
+        );
+      },
+      error: (error) => console.error('Failed to toggle product availability', error),
+    });
   }
 }
