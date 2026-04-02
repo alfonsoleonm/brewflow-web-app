@@ -6,7 +6,6 @@
 .cart-panel {
     width: 380px;
     max-width: 100%;
-    padding: 0;
 }
 
 .menu-header {
@@ -108,4 +107,22 @@
     border-radius: 999px;
     background: #f3eaea;
     color: #8b3a3a;
+}
+
+@media (max-width: 700px) {
+    .cart-trigger {
+        font-size: 0; // already hiding text
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 8px; // reduce side padding
+        min-width: 44px; // nice tap target
+    }
+
+    .cart-trigger mat-icon {
+        font-size: 22px;
+        margin: 0; // remove any default spacing
+    }
 }
